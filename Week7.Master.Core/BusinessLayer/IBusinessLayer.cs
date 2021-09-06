@@ -17,6 +17,20 @@ namespace Week7.Master.Core.BusinessLayer
 
         //Inserire un nuovo corso
         public string InserisciNuovoCorso(Corso newCorso);
+
+        //Modifica Corso
+        public string ModificaCorso(string codiceCorsoDaModificare, string nuovoNome, string nuovaDescrizione);
+        //Elimina corso
+        public string EliminaCorso(string codiceCorsoDaEliminare);
+
+        #endregion
+
+        #region Funzionalità Studenti
+        //Visualizza tutti gli studenti
+        public List<Studente> GetAllStudenti();
+
+        public string InserisciNuovoStudente(Studente nuovoStudente);
+
         #endregion
 
     }

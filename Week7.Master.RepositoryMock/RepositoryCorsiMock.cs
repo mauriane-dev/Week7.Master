@@ -20,12 +20,14 @@ namespace Week7.Master.RepositoryMock
 
         public Corso Add(Corso item)
         {
-            throw new NotImplementedException();
+            Corsi.Add(item);
+            return item;
         }
 
         public bool Delete(Corso item)
         {
-            throw new NotImplementedException();
+            Corsi.Remove(item);
+            return true;
         }
 
         public List<Corso> GetAll()
@@ -35,12 +37,16 @@ namespace Week7.Master.RepositoryMock
 
         public Corso GetByCode(string code)
         {
-            throw new NotImplementedException();
+            return Corsi.Find(c => c.CorsoCodice == code);
+            //return Corsi.FirstOrDefault(c => c.CorsoCodice == code);
         }
 
         public Corso Update(Corso item)
         {
-            throw new NotImplementedException();
+            var old = Corsi.FirstOrDefault(c => c.CorsoCodice == item.CorsoCodice);
+            old.Nome = item.Nome;
+            old.Descrizione = item.Descrizione;
+            return item;
         }
     }
 }

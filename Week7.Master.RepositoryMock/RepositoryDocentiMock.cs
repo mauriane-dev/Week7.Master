@@ -10,6 +10,12 @@ namespace Week7.Master.RepositoryMock
 {
     public class RepositoryDocentiMock : IRepositoryDocenti
     {
+        public static List<Docente> Docenti = new List<Docente>()
+        {
+            new Docente{ID=1, Nome="Mario", Cognome="Rossi", Email="mario@mail.it", Telefono="3331234567"},
+            new Docente{ID=2, Nome="Giuseppe", Cognome="Bianchi", Email="giuseppe@mail.it", Telefono="3331434567"}
+        };
+
         public Docente Add(Docente item)
         {
             throw new NotImplementedException();

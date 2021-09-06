@@ -10,9 +10,28 @@ namespace Week7.Master.RepositoryMock
 {
     public class RepositoryStudentiMock : IRepositoryStudenti
     {
+
+        public static List<Studente> Studenti = new List<Studente>();
+
+
+
         public Studente Add(Studente item)
         {
-            throw new NotImplementedException();
+            if (Studenti.Count == 0)
+            {
+                item.ID = 1;
+            }
+            else
+            {
+                item.ID = Studenti.Max(s => s.ID) + 1;
+            }
+
+            var corso = RepositoryCorsiMock.Corsi.FirstOrDefault(c => c.CorsoCodice == item.CorsoCodice);
+            item.Corso = corso;
+            corso.Studenti.Add(item);
+
+            Studenti.Add(item);
+            return item;
         }
 
         public bool Delete(Studente item)
@@ -22,7 +41,7 @@ namespace Week7.Master.RepositoryMock
 
         public List<Studente> GetAll()
         {
-            throw new NotImplementedException();
+            return Studenti;
         }
 
         public Studente GetById(int id)

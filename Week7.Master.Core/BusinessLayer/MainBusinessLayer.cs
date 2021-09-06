@@ -24,6 +24,7 @@ namespace Week7.Master.Core.BusinessLayer
             studentiRepo = studenti;
         }
 
+        
 
         #region Funzionalità Corsi
         public List<Corso> GetAllCorsi()
@@ -35,7 +36,7 @@ namespace Week7.Master.Core.BusinessLayer
         {
             //controllo input
             //non deve esistere un altro corso con lo stesso codice
-            var corsoEsistente=corsiRepo.GetByCode(newCorso.CorsoCodice);
+            Corso corsoEsistente=corsiRepo.GetByCode(newCorso.CorsoCodice);
             if (corsoEsistente != null)
             {
                 return "Errore: Codice corso già presente";
@@ -44,6 +45,55 @@ namespace Week7.Master.Core.BusinessLayer
             return "Corso aggiunto correttamente";
         }
 
+        public string ModificaCorso(string codiceCorsoDaModificare, string nuovoNome, string nuovaDescrizione)
+        {
+            //controllo i dati
+            Corso corsoEsistente = corsiRepo.GetByCode(codiceCorsoDaModificare);
+            if (corsoEsistente == null)
+            {
+                return "Errore: Codice errato.";
+            }
+            corsoEsistente.Nome = nuovoNome;
+            corsoEsistente.Descrizione = nuovaDescrizione;
+            corsiRepo.Update(corsoEsistente);
+            return "Il corso è stato modificato con successo";
+        }
+
+        public string EliminaCorso(string codiceCorsoDaEliminare)
+        {
+            Corso corsoEsistente = corsiRepo.GetByCode(codiceCorsoDaEliminare);
+            if (corsoEsistente == null)
+            {
+                return "Errore: Codice errato.";
+            }
+
+            //TODO:non deve essere possibile cancellare un corso che ha almeno una lezione associata
+            //nè un corso che ha almeno uno studente iscritto.
+
+            corsiRepo.Delete(corsoEsistente);
+            return "Corso eliminato correttamente";
+
+        }
+
+        #endregion
+
+        #region funzionalità Studenti
+        public List<Studente> GetAllStudenti()
+        {
+            return studentiRepo.GetAll();
+        }
+
+        public string InserisciNuovoStudente(Studente nuovoStudente)
+        {
+            //controllo input
+            Corso corsoEsistente = corsiRepo.GetByCode(nuovoStudente.CorsoCodice);
+            if (corsoEsistente == null)
+            {
+                return "Codice corso errato";
+            }
+            studentiRepo.Add(nuovoStudente);
+            return "studente inserito correttamente";
+        }
         #endregion
     }
 }

@@ -73,10 +73,98 @@ namespace Week7.Master
                 case 2:
                     InserisciNuovoCorso();
                     break;
+                case 3:
+                    ModificaCorso();//solo nome e descrizione
+                    break;
+                case 4:
+                    EliminaCorso(); 
+                    break;
+                case 15:
+                    VisualizzaElencoCompletoStudenti();
+                    break;
+                case 16:
+                    InserisciNuovoStudente();
+                    break;
                 case 0:
                     return false;
             }
             return true;
+        }
+
+        private static void InserisciNuovoStudente()
+        {
+            //Chiedo le info per creare il nuovo studente
+            Console.WriteLine("Inserisci nome");
+            string nome = Console.ReadLine();
+            Console.WriteLine("Inserisci cognome");
+            string cognome = Console.ReadLine();
+            Console.WriteLine("Inserisci email");
+            string email = Console.ReadLine();
+            Console.WriteLine("Inserisci dat di nascita (formato gg-mm-aaaa)");
+            DateTime dataNascita = DateTime.Parse(Console.ReadLine());
+            Console.WriteLine("Inserisci titolo studio");
+            string titoloStudio = Console.ReadLine();
+            VisualizzaCorsi();
+            Console.WriteLine("Inserisci codice corso a cui è iscritto");
+            string codiceCorso = Console.ReadLine();
+
+            //lo creo
+            Studente nuovoStudente = new Studente();
+            nuovoStudente.Nome = nome;
+            nuovoStudente.Cognome = cognome;
+            nuovoStudente.DataNascita = dataNascita;
+            nuovoStudente.Email = email;
+            nuovoStudente.TitoloStudio = titoloStudio;
+            nuovoStudente.CorsoCodice = codiceCorso;
+
+            //lo passo al bl
+            var esito=bl.InserisciNuovoStudente(nuovoStudente);
+            Console.WriteLine(esito);
+
+
+
+        }
+
+        private static void VisualizzaElencoCompletoStudenti()
+        {
+            var studenti = bl.GetAllStudenti();
+            if (studenti.Count == 0)
+            {
+                Console.WriteLine("Nessuno Studente presente");
+            }
+            else
+            {
+                foreach (var item in studenti)
+                {
+                    Console.WriteLine(item);
+                }
+            }
+        }
+
+        private static void EliminaCorso()
+        {
+            Console.WriteLine("Ecco l'elenco dei corsi disponibili:");
+            VisualizzaCorsi();
+            Console.WriteLine("Quale corso vuoi eliminare? Inserisci il codice");
+            string codice = Console.ReadLine();
+            string esito = bl.EliminaCorso(codice);
+            Console.WriteLine(esito);
+
+        }
+
+        private static void ModificaCorso()
+        {
+            Console.WriteLine("Ecco l'elenco de i corsi disponibili");
+            VisualizzaCorsi();
+            Console.WriteLine("Quale corso vuoi modificare? Inserisci il codice");
+            string codice = Console.ReadLine();
+            Console.WriteLine("Inserisci il nuovo nome del corso");
+            string nuovoNome = Console.ReadLine();
+            Console.WriteLine("Inserisci la nua descrizione del corso");
+            string nuovaDescrizione = Console.ReadLine();
+
+            var esito= bl.ModificaCorso(codice, nuovoNome, nuovaDescrizione);
+            Console.WriteLine(esito);
         }
 
         private static void InserisciNuovoCorso()

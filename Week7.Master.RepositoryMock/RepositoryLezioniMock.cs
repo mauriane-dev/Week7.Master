@@ -10,6 +10,9 @@ namespace Week7.Master.RepositoryMock
 {
     public class RepositoryLezioniMock : IRepositoryLezioni
     {
+        public static List<Lezione> Lezioni = new List<Lezione>();
+
+
         public Lezione Add(Lezione item)
         {
             throw new NotImplementedException();
