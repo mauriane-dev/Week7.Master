@@ -1,9 +1,13 @@
 ﻿using System;
+using Week7.Master.Core.BusinessLayer;
+using Week7.Master.Core.Entities;
+using Week7.Master.RepositoryMock;
 
 namespace Week7.Master
 {
     class Program
     {
+        private static readonly IBusinessLayer bl = new MainBusinessLayer(new RepositoryCorsiMock(), new RepositoryDocentiMock(), new RepositoryLezioniMock(), new RepositoryStudentiMock());
         static void Main(string[] args)
         {
             bool continua = true;
@@ -48,8 +52,8 @@ namespace Week7.Master
             //Exit
             Console.WriteLine("\n0. Exit");
             Console.WriteLine("********************************************");
-            
-            
+
+
             int scelta;
             Console.Write("Inserisci scelta: ");
             while (!int.TryParse(Console.ReadLine(), out scelta) || scelta < 0 || scelta > 19)
@@ -61,8 +65,57 @@ namespace Week7.Master
         }
         private static bool AnalizzaScelta(int scelta)
         {
-            throw new NotImplementedException();
+            switch (scelta)
+            {
+                case 1:
+                    VisualizzaCorsi();
+                    break;
+                case 2:
+                    InserisciNuovoCorso();
+                    break;
+                case 0:
+                    return false;
+            }
+            return true;
         }
 
+        private static void InserisciNuovoCorso()
+        {
+            //Chiedo all'utente i dati per creare il nuovo corso
+            Console.WriteLine("Inserisci il codice del nuovo corso");
+            string codice = Console.ReadLine();
+            Console.WriteLine("Inserisci il nome del nuovo corso");
+            string nome = Console.ReadLine();
+            Console.WriteLine("Inserisci la descrizione del nuovo corso");
+            string descrizione = Console.ReadLine();
+
+            //lo creo
+            Corso nuovoCorso = new Corso();
+            nuovoCorso.Nome = nome;
+            nuovoCorso.CorsoCodice = codice;
+            nuovoCorso.Descrizione = descrizione;
+
+            //lo passo al business layer per controllare i dati ed aggiungerlo poi nel "DB"
+            string esito= bl.InserisciNuovoCorso(nuovoCorso);
+            //Stampo il messaggio
+            Console.WriteLine(esito);
+        }
+
+        private static void VisualizzaCorsi()
+        {
+            var corsi=bl.GetAllCorsi();
+            if (corsi.Count == 0)
+            {
+                Console.WriteLine("Lista vuota. Non ci sono corsi!");
+            }
+            else
+            {
+                Console.WriteLine("I Corsi disponibili sono:");
+                foreach (var item in corsi)
+                {
+                    Console.WriteLine(item.ToString());
+                }
+            }
+        }
     }
 }
