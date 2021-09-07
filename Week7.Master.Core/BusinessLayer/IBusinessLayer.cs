@@ -36,5 +36,39 @@ namespace Week7.Master.Core.BusinessLayer
 
         #endregion
 
+        #region Funzionalità Docenti
+        //Visualizza docenti
+        public IList<Docente> GetAllDocenti();
+
+        //Inserisci nuovo docente
+        public string InserisciNuovoDocente(Docente nuovoDocente);
+
+        //Modifica docente (solo email e telefono)
+        public string ModificaDocente(int id, string nuovoTelefono, string nuovaMail);
+
+        //Elimina docente per id
+        public string EliminaDocente(int idDocenteDaEliminare);
+        #endregion
+
+        #region Funzionalità Lezioni
+        //Visualizza ElencoCompleto delle lezioni
+        public IList<Lezione> GetAllLezioni();
+
+        //aggiungi lezione
+        public string AggiungiLezione(Lezione lezione);
+
+        //modifica lezione
+        public string ModificaLezione(int id, string nuovaAula);
+
+        //Elimina Lezione
+        string EliminaLezione(int idLezioneDaEliminare);
+
+        //visualizza tutte lezioni di un corso recuperando il corso in base al codiceCorso
+        public IList<Lezione> GetLezioniByCodiceCorso(string codiceCorso);
+
+        //visualizza tutte lezioni di un corso recuperando il corso in base al nome
+        public IList<Lezione> GetLezioniByNomeCorso(string nomeCorso);
+        #endregion
+
     }
 }

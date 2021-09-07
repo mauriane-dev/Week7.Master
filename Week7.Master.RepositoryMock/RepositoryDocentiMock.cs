@@ -18,27 +18,40 @@ namespace Week7.Master.RepositoryMock
 
         public Docente Add(Docente item)
         {
-            throw new NotImplementedException();
+            if (Docenti.Count() == 0)
+            {
+                item.ID = 1;
+            }
+            else
+            {
+                item.ID = Docenti.Max(x => x.ID) + 1;
+            }
+            Docenti.Add(item);
+            return item;
         }
 
         public bool Delete(Docente item)
         {
-            throw new NotImplementedException();
+            Docenti.Remove(item);
+            return true;
         }
 
         public List<Docente> GetAll()
         {
-            throw new NotImplementedException();
+            return Docenti.ToList();
         }
 
         public Docente GetById(int id)
         {
-            throw new NotImplementedException();
+            return GetAll().FirstOrDefault(d => d.ID == id);
         }
 
         public Docente Update(Docente item)
         {
-            throw new NotImplementedException();
+            var old = GetById(item.ID);            
+            old.Email = item.Email;
+            old.Telefono = item.Telefono;
+            return item;
         }
     }
 }

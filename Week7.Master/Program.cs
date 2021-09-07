@@ -25,13 +25,13 @@ namespace Week7.Master
             Console.WriteLine("\nFunzionalità CORSI");
             Console.WriteLine("1. Visualizza Corsi");
             Console.WriteLine("2. Inserisci nuovo Corso");
-            Console.WriteLine("3. Modifica Corso");
+            Console.WriteLine("3. Modifica Corso"); //nome e descrizione
             Console.WriteLine("4. Elimina Corso");
             //Funzionalità su Docenti
             Console.WriteLine("\nFunzionalità Docenti");
             Console.WriteLine("5. Visualizza Docenti");
             Console.WriteLine("6. Inserisci nuovo Docente");
-            Console.WriteLine("7. Modifica Docente");
+            Console.WriteLine("7. Modifica Docente");//per semplicità solo email e telefono
             Console.WriteLine("8. Elimina Docente");
             //Funzionalità su Lezioni
             Console.WriteLine("\nFunzionalità Lezioni");
@@ -79,6 +79,36 @@ namespace Week7.Master
                 case 4:
                     EliminaCorso(); 
                     break;
+                case 5:
+                    VisualizzaDocenti();
+                    break;
+                case 6:
+                    InserisciNuovoDocente();
+                    break;
+                case 7:
+                    ModificaInfoDocente(); //solo Email e Telefono
+                    break;
+                case 8:
+                    EliminaDocente();
+                    break;
+                case 9:
+                    VisualizzaElencoLezioni();
+                    break;
+                case 10:
+                    InserisciNuovaLezione();
+                    break;
+                case 11:
+                    ModificaLezione(); //solo Aula
+                    break;
+                case 12:
+                    EliminaLezione();
+                    break;
+                case 13:
+                    VisualizzaLezioniByCodiceCorso();
+                    break;
+                case 14:
+                    VisualizzaLezioniByNomeCorso();
+                    break;
                 case 15:
                     VisualizzaElencoCompletoStudenti();
                     break;
@@ -101,6 +131,198 @@ namespace Week7.Master
         }
 
 
+        #region Funzionalità Docenti
+        private static void InserisciNuovoDocente()
+        {
+            //chiedo all'utente i dati per "creare" il nuovoDocente;            
+            Console.WriteLine("Inserisci il nome del nuovo Docente");
+            string nome = Console.ReadLine();
+            Console.WriteLine("Inserisci il cognome del nuovo Docente");
+            string cognome = Console.ReadLine();
+            Console.WriteLine("Inserisci l'email del nuovo Docente");
+            string email = Console.ReadLine();
+            Console.WriteLine("Inserisci il numero di telefono del nuovo Docente");
+            string telefono = Console.ReadLine();
+
+            //lo creo
+            Docente nuovoDocente = new Docente();
+            nuovoDocente.Nome = nome;
+            nuovoDocente.Cognome = cognome;
+            nuovoDocente.Email = email;
+            nuovoDocente.Telefono = telefono;
+
+            //lo passo al business layer per controllare i dati ed aggiungerlo poi nel "DB".
+            string esito = bl.InserisciNuovoDocente(nuovoDocente);
+            //Stampo il "risultato/messaggio"
+            Console.WriteLine(esito);
+        }
+
+        private static void EliminaDocente()
+        {
+            Console.WriteLine("Ecco l'elenco dei docenti disponibili:");
+            VisualizzaDocenti();
+            Console.WriteLine("Quale docente vuoi eliminare? Inserisci l'id");
+            int idDocenteDaEliminare = int.Parse(Console.ReadLine());
+            string esito = bl.EliminaDocente(idDocenteDaEliminare);
+            Console.WriteLine(esito);
+        }
+
+        private static void ModificaInfoDocente()
+        {
+            Console.WriteLine("Ecco l'elenco dei docenti disponibili:");
+            VisualizzaDocenti();
+            Console.WriteLine("Quale docente vuoi modificare? Inserisci l'id");
+            int id = int.Parse(Console.ReadLine()); //TODO altri controlli..
+            //Immagino che si possano modificare solo telefono e email
+            Console.WriteLine("Inserisci la nuova mail:");
+            string nuovaMail = Console.ReadLine();
+            Console.WriteLine("Inserisci il nuovo telefono:");
+            string nuovoTelefono = Console.ReadLine();
+            string esito = bl.ModificaDocente(id, nuovoTelefono, nuovaMail);
+            Console.WriteLine(esito);
+        }
+
+        private static void VisualizzaDocenti()
+        {
+            var docenti = bl.GetAllDocenti();
+            Console.WriteLine("I docenti disponibili sono:");
+            if (docenti.Count == 0)
+            {
+                Console.WriteLine("Lista vuota");
+            }
+            else
+            {
+                foreach (var item in docenti)
+                {
+                    Console.WriteLine(item);
+                }
+            }
+        }
+        #endregion
+
+
+        #region Funzionalità Lezioni
+        private static void InserisciNuovaLezione()
+        {
+
+            //chiedo le info che mi servono per creare la lezione 
+            Console.WriteLine("Inserisci i dati della lezione:");
+            Console.Write("Data e ora di inizio (formato gg-mm-aaaa hh:mm): ");
+            DateTime dataOraInizio = DateTime.Parse(Console.ReadLine()); //Aggiungere Eventuali controlli (es. do-while..)
+            Console.Write("\nDurata (in gg): ");
+            int durataGG = int.Parse(Console.ReadLine());//Aggiungere eventuali controlli
+            Console.Write("\nAula: ");
+            string aula = Console.ReadLine();
+            Console.Write("\nCodice Corso a cui si vuole Associare: ");
+            VisualizzaCorsi();
+            string codiceCorso = Console.ReadLine();
+            Console.WriteLine("Elenco docenti disponibili:");
+            VisualizzaDocenti();
+            Console.Write("\nId Docente che terrà la lezione: ");
+            int docenteId = int.Parse(Console.ReadLine());
+
+            //la creo
+            Lezione nuovaLezione = new Lezione();
+            nuovaLezione.DataOraInizio = dataOraInizio;
+            nuovaLezione.Durata = durataGG;
+            nuovaLezione.Aula = aula;
+            nuovaLezione.CorsoCodice = codiceCorso;
+            nuovaLezione.DocenteID = docenteId;
+
+            //la passo a business layer per i controlli
+            string esito = bl.AggiungiLezione(nuovaLezione);
+            //stampo esito
+            Console.WriteLine(esito);
+        }
+
+        private static void EliminaLezione()
+        {
+            //Interazione con utente            
+            Console.WriteLine("Elenco completo delle lezioni disponibili:");
+            VisualizzaElencoLezioni();
+            Console.WriteLine("Quale lezione vuoi eliminare? Inserisci l'id");
+            int idLezioneDaEliminare = int.Parse(Console.ReadLine());
+            string esito = bl.EliminaLezione(idLezioneDaEliminare);
+            Console.WriteLine(esito);
+        }
+
+        private static void ModificaLezione()
+        {
+            //Supponiamo che si può modificare solo l'aula della lezione (per semplicità)
+            VisualizzaElencoLezioni();
+            Console.WriteLine("Per quale lezione vuoi modificare l'aula? Inserisci l'id della lezione");
+            int idLezioneDaModificare = int.Parse(Console.ReadLine());
+            Console.WriteLine("Inserisci la nuova Aula:");
+            string nuovaAula = Console.ReadLine();
+            string esito = bl.ModificaLezione(idLezioneDaModificare, nuovaAula);
+            Console.WriteLine(esito);
+        }
+
+        private static void VisualizzaElencoLezioni()
+        {
+            var lezioni = bl.GetAllLezioni();
+            if (lezioni.Count == 0)
+            {
+                Console.WriteLine("Nessuna Lezione presente");
+            }
+            else
+            {
+                foreach (var item in lezioni)
+                {
+                    Console.WriteLine(item);
+                }
+            }
+        }
+
+        private static void VisualizzaLezioniByCodiceCorso()
+        {
+            Console.WriteLine("Inserisci il codice del corso:");
+            string corsoCode = Console.ReadLine();
+
+            var lezioni = bl.GetLezioniByCodiceCorso(corsoCode);
+            if (lezioni == null)
+            {
+                Console.WriteLine("Codice corso errato.");
+            }else if (lezioni.Count == 0)
+            {
+                Console.WriteLine("Lista vuota.");
+            }
+            else
+            {
+                foreach (var item in lezioni)
+                {
+                    Console.WriteLine(item);
+                }
+            }
+        }
+
+        private static void VisualizzaLezioniByNomeCorso()
+        {
+            Console.WriteLine("Inserisci il nome del corso:");
+            string nomeCorso = Console.ReadLine();
+
+            var lezioni = bl.GetLezioniByNomeCorso(nomeCorso);
+
+            if (lezioni == null)
+            {
+                Console.WriteLine("Errore. Non esiste nessun corso con questo nome");
+            }
+            else if (lezioni.Count == 0)
+            {
+                Console.WriteLine("Lista vuota");
+            }
+            else
+            {
+                foreach (var item in lezioni)
+                {
+                    Console.WriteLine(item);
+                }
+            }
+        }
+        #endregion
+
+
+        #region Funzionalità Studenti
         private static void VisualizzaStudentiIscrittiAdUnCorso()
         {
             //Visualizza studenti iscritti ad un corso
@@ -133,6 +355,7 @@ namespace Week7.Master
             }
 
         }
+
         private static void EliminaStudente()
         {
             VisualizzaElencoCompletoStudenti();
@@ -141,6 +364,7 @@ namespace Week7.Master
             string esito = bl.EliminaStudente(idStudenteDaEliminare);
             Console.WriteLine(esito);
         }
+
         private static void ModificaStudente()
         {
             VisualizzaElencoCompletoStudenti();
@@ -201,7 +425,10 @@ namespace Week7.Master
                 }
             }
         }
+        #endregion
 
+
+        #region Funzionalità Corsi
         private static void EliminaCorso()
         {
             Console.WriteLine("Ecco l'elenco dei corsi disponibili:");
@@ -266,5 +493,6 @@ namespace Week7.Master
                 }
             }
         }
+        #endregion
     }
 }
