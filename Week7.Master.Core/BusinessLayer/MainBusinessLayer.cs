@@ -94,6 +94,44 @@ namespace Week7.Master.Core.BusinessLayer
             studentiRepo.Add(nuovoStudente);
             return "studente inserito correttamente";
         }
+
+        public string ModificaStudente(int idStudenteDaModificare, string nuovaEmail)
+        {
+            //controllo input
+            //controllo se id esiste
+            var studente = studentiRepo.GetById(idStudenteDaModificare);
+            if (studente == null)
+            {
+                return "Id Studente errato o inesistente";
+            }
+            studentiRepo.Update(studente);
+            return "Email Studente aggiornata correttamente";
+        }
+        public string EliminaStudente(int idStudenteDaEliminare)
+        {
+            //controllo input
+            //controllo se id esiste
+            var studente = studentiRepo.GetById(idStudenteDaEliminare);
+            if (studente == null)
+            {
+                return "Id Studente errato o inesistente";
+            }
+            studentiRepo.Delete(studente);
+            return "Studente eliminato correttamente";
+        }
+
+        public List<Studente> GetStudentiByCorsoCodice(string codiceCorso)
+        {
+            //controllo input
+            //controllo se codice corso esiste. Se non esiste allora restituisco null
+            //se il corso esiste, allora recupero dalla repo degli studenti la lista di quelli che hanno quel corsoCodice
+            var corso = corsiRepo.GetByCode(codiceCorso);
+            if (corso == null)
+            {
+                return null;
+            }            
+            return studentiRepo.GetAll().Where(s => s.CorsoCodice == corso.CorsoCodice).ToList();
+        }
         #endregion
     }
 }

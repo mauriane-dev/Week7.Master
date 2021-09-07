@@ -36,7 +36,8 @@ namespace Week7.Master.RepositoryMock
 
         public bool Delete(Studente item)
         {
-            throw new NotImplementedException();
+            Studenti.Remove(item);
+            return true;
         }
 
         public List<Studente> GetAll()
@@ -46,12 +47,14 @@ namespace Week7.Master.RepositoryMock
 
         public Studente GetById(int id)
         {
-            throw new NotImplementedException();
+            return Studenti.FirstOrDefault(s => s.ID == id);
         }
 
         public Studente Update(Studente item)
         {
-            throw new NotImplementedException();
+            var old = GetById(item.ID);           
+            old.Email = item.Email;
+            return item;
         }
     }
 }

@@ -85,10 +85,71 @@ namespace Week7.Master
                 case 16:
                     InserisciNuovoStudente();
                     break;
+                case 17:
+                    ModificaStudente(); //solo email
+                    break;
+                case 18:
+                    EliminaStudente();
+                    break;
+                case 19:
+                    VisualizzaStudentiIscrittiAdUnCorso();
+                    break;
                 case 0:
                     return false;
             }
             return true;
+        }
+
+
+        private static void VisualizzaStudentiIscrittiAdUnCorso()
+        {
+            //Visualizza studenti iscritti ad un corso
+            //Faccio vedere l'elenco dei corsi
+            //Chiedo all'utente di inserire il codice di un corso
+            //"parlo" con il bl, gli passo il codice corso) e mi faccio restituire l'elenco di studenti iscritti a quel corso
+            //Se l'elenco è null=> significa che ho sbagliato codice del corso
+            //Se l'elenco è vuoto (count==0) => nessun iscritto a quel corso
+            //Se l'elenco non è vuoto=> scorro la lista e stampo gli studenti
+            Console.WriteLine("Ecco l'elenco dei corsi:");
+            VisualizzaCorsi();
+            Console.WriteLine("Inserisci codice corso ");
+            string codiceCorso = Console.ReadLine();
+
+            var listaStudentiIscrittiAlCorso = bl.GetStudentiByCorsoCodice(codiceCorso);
+            if (listaStudentiIscrittiAlCorso == null)
+            {
+                Console.WriteLine("Codice Corso errato!");
+            }
+            if (listaStudentiIscrittiAlCorso.Count == 0)
+            {
+                Console.WriteLine("Nessuno studente iscritto a questo corso!");
+            }
+            else
+            {
+                foreach (var item in listaStudentiIscrittiAlCorso)
+                {
+                    Console.WriteLine(item);
+                }
+            }
+
+        }
+        private static void EliminaStudente()
+        {
+            VisualizzaElencoCompletoStudenti();
+            Console.WriteLine("Quale studente vuoi eliminare? Inserisci l'id della lezione");
+            int idStudenteDaEliminare = int.Parse(Console.ReadLine());
+            string esito = bl.EliminaStudente(idStudenteDaEliminare);
+            Console.WriteLine(esito);
+        }
+        private static void ModificaStudente()
+        {
+            VisualizzaElencoCompletoStudenti();
+            Console.WriteLine("Per quale studente vuoi modificare l'email? Inserisci l'id della lezione");
+            int idStudenteDaModificare = int.Parse(Console.ReadLine());
+            Console.WriteLine("Inserisci la nuova email:");
+            string nuovaEmail = Console.ReadLine();
+            string esito = bl.ModificaStudente(idStudenteDaModificare, nuovaEmail);
+            Console.WriteLine(esito);
         }
 
         private static void InserisciNuovoStudente()

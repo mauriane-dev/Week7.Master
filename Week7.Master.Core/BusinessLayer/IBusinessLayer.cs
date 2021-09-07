@@ -30,6 +30,9 @@ namespace Week7.Master.Core.BusinessLayer
         public List<Studente> GetAllStudenti();
 
         public string InserisciNuovoStudente(Studente nuovoStudente);
+        public string ModificaStudente(int idStudenteDaModificare, string nuovaEmail);
+        public string EliminaStudente(int idStudenteDaEliminare);
+        public List<Studente> GetStudentiByCorsoCodice(string codiceCorso);
 
         #endregion
 
