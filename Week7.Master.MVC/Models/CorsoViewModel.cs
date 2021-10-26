@@ -18,5 +18,8 @@ namespace Week7.Master.MVC.Models
         public string Nome { get; set; }
 
         public string Descrizione { get; set; }
+
+
+        public List<StudenteViewModel> Studenti { get; set; } = new List<StudenteViewModel>();
     }
 }

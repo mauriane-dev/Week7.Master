@@ -114,6 +114,7 @@ namespace Week7.Master.Core.BusinessLayer
             {
                 return "Id Studente errato o inesistente";
             }
+            studente.Email = nuovaEmail;
             studentiRepo.Update(studente);
             return "Email Studente aggiornata correttamente";
         }

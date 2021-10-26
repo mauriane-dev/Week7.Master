@@ -1,0 +1,10 @@
+﻿@model StudenteViewModel
+<h1>Inserisci nuovo Studente</h1>
+
+<form method="post">
+    <partial name="_Form" model="Model" />
+
+    <input type="submit" value="Inserisci" class="tbn btn-primary" />
+    <input type="reset" value="Reset" class="=btn btn-primary" />
+    <a class="btn btn-primary" asp-controller="Studenti" asp-action="Index" role="button">Indietro</a>
+</form>
