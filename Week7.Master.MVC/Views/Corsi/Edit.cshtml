@@ -1,15 +1,15 @@
 ﻿@model CorsoViewModel
-<h1>Inserisci nuovo Corso</h1>
-@{ 
-    ViewBag.Readonly = false;
+<h1>Modifica Corso</h1>
+@{
+    ViewBag.Readonly = true;
 }
+
 <form method="post">
- 
+   
 
     <partial name="_Form" model="Model" />
-    
-
-    <input type="submit" value="Inserisci" class="tbn btn-primary" />
+   
+    <input type="submit" value="Modifica" class="tbn btn-primary" />
     <input type="reset" value="Reset" class="=btn btn-primary" />
     <a class="btn btn-primary" asp-controller="Corsi" asp-action="Index" role="button">Indietro</a>
 

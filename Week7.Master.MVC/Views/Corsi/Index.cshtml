@@ -20,7 +20,9 @@
             <td>@item.Nome</td>
             @*<td>@item.Descrizione</td>*@
         <th>
+            <a asp-controller="Corsi" asp-action="Edit" asp-route-id="@item.CorsoCodice" class="btn btn-primary">Modifica</a>
             <a asp-controller="Corsi" asp-action="Details" asp-route-id="@item.CorsoCodice" class="btn btn-primary">Visualizza Dettagli</a>
+            <a asp-controller="Corsi" asp-action="Delete" asp-route-id="@item.CorsoCodice" class="btn btn-danger">Elimina</a>
         </th>
         </tr>
         }
