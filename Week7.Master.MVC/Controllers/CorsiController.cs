@@ -51,5 +51,23 @@ namespace Week7.Master.MVC.Controllers
             return View(corsoViewModel);
 
         }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create (CorsoViewModel corsoViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var corso = corsoViewModel.ToCorso();
+                BL.InserisciNuovoCorso(corso);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(corsoViewModel);
+        }
     }
 }
