@@ -32,6 +32,11 @@
 
 <div class="form-group">
     <label asp-for="TitoloStudio"></label>
-    <input asp-for="TitoloStudio" class="form-control" />
+    @*<input asp-for="TitoloStudio" class="form-control" />*@
+    <select asp-for="TitoloStudio" asp-items="@ViewBag.TitoloStudio" class="form-control">
+        <option value="">Selezionare un'opzione...</option>
+        @*<option value="D">Diploma</option>
+        <option value="L">Laurea</option>*@
+    </select>
     <span asp-validation-for="TitoloStudio" class="text-danger"></span>
 </div>

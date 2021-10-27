@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,7 @@ namespace Week7.Master.MVC.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            LoadViewBag();
             return View();
         }
         [HttpPost]
@@ -50,7 +52,7 @@ namespace Week7.Master.MVC.Controllers
                 BL.InserisciNuovoStudente(studente);
                 return RedirectToAction(nameof(Index));
             }
-
+            LoadViewBag();
             return View(studenteViewModel);
         }
 
@@ -59,6 +61,7 @@ namespace Week7.Master.MVC.Controllers
         {
             var studente = BL.GetAllStudenti().FirstOrDefault(s => s.ID == id);
             var studenteViewModel = studente.ToStudenteViewModel();
+            LoadViewBag();
             return View(studenteViewModel);
         }
 
@@ -71,6 +74,7 @@ namespace Week7.Master.MVC.Controllers
                 BL.ModificaStudente(studente.ID, studente.Email);
                 return RedirectToAction(nameof(Index));
             }
+            LoadViewBag();
             return View(studenteViewModel);
         }
 
@@ -88,6 +92,13 @@ namespace Week7.Master.MVC.Controllers
             var studente = studenteViewModel.ToStudente();
             BL.EliminaStudente(studente.ID);
             return RedirectToAction(nameof(Index));
+        }
+
+        private void LoadViewBag()
+        {
+            ViewBag.TitoloStudio = new SelectList(new[]{
+                new { Value="D", Text="Diploma"},
+                new { Value="L", Text="Laurea"} }.OrderBy(x => x.Text), "Value", "Text");
         }
     }
 }
