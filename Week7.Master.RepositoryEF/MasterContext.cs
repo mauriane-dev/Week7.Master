@@ -18,10 +18,19 @@ namespace Week7.Master.RepositoryEF
 
 
 
+        public MasterContext()
+        {
 
+        }
+
+        public MasterContext(DbContextOptions<MasterContext> options) : base(options) { }
+
+
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb; Database=CorsiMaster; Trusted_Connection=True;");
+            if (!optionsBuilder.IsConfigured)
+                optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb; Database=CorsiMaster; Trusted_Connection=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -54,6 +54,40 @@ namespace Week7.Master.MVC.Controllers
             return View(studenteViewModel);
         }
 
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var studente = BL.GetAllStudenti().FirstOrDefault(s => s.ID == id);
+            var studenteViewModel = studente.ToStudenteViewModel();
+            return View(studenteViewModel);
+        }
 
+        [HttpPost]
+        public IActionResult Edit(StudenteViewModel studenteViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var studente = studenteViewModel.ToStudente();
+                BL.ModificaStudente(studente.ID, studente.Email);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(studenteViewModel);
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var studente = BL.GetAllStudenti().FirstOrDefault(s => s.ID == id);
+            var studenteViewModel = studente.ToStudenteViewModel();
+            return View(studenteViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(StudenteViewModel studenteViewModel)
+        {
+            var studente = studenteViewModel.ToStudente();
+            BL.EliminaStudente(studente.ID);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

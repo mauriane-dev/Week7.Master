@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -10,6 +11,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Week7.Master.Core.BusinessLayer;
 using Week7.Master.Core.InterfaceRepositories;
+using Week7.Master.MVC.Models;
+using Week7.Master.RepositoryEF;
+using Week7.Master.RepositoryEF.RepositoryEF;
 using Week7.Master.RepositoryMock;
 
 namespace Week7.Master.MVC
@@ -28,12 +32,25 @@ namespace Week7.Master.MVC
         {
             services.AddControllersWithViews();
 
-            services.AddTransient<IBusinessLayer, MainBusinessLayer>();
+            services.AddTransient<ICounterService, CounterService>();
+            //services.AddScoped<ICounterService, CounterService>();
+            //services.AddSingleton<ICounterService, CounterService>();
 
-            services.AddTransient<IRepositoryCorsi, RepositoryCorsiMock>();
-            services.AddTransient<IRepositoryStudenti, RepositoryStudentiMock>();
-            services.AddTransient<IRepositoryLezioni, RepositoryLezioniMock>();
-            services.AddTransient<IRepositoryDocenti, RepositoryDocentiMock>();
+            services.AddScoped<IBusinessLayer, MainBusinessLayer>();
+
+            //services.AddTransient<IRepositoryCorsi, RepositoryCorsiMock>();
+            //services.AddTransient<IRepositoryStudenti, RepositoryStudentiMock>();
+            //services.AddTransient<IRepositoryLezioni, RepositoryLezioniMock>();
+            //services.AddTransient<IRepositoryDocenti, RepositoryDocentiMock>();
+            services.AddScoped<IRepositoryCorsi, RepositoryCorsiEF>();
+            services.AddScoped<IRepositoryStudenti, RepositoryStudentiEF>();
+            services.AddScoped<IRepositoryLezioni, RepositoryLezioniEF>();
+            services.AddScoped<IRepositoryDocenti, RepositoryDocentiEF>();
+
+            services.AddDbContext<MasterContext>(options =>
+           {
+               options.UseSqlServer(Configuration.GetConnectionString("EFConnection"));
+           });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

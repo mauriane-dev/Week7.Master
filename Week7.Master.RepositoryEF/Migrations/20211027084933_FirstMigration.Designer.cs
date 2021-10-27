@@ -10,7 +10,7 @@ using Week7.Master.RepositoryEF;
 namespace Week7.Master.RepositoryEF.Migrations
 {
     [DbContext(typeof(MasterContext))]
-    [Migration("20210907132252_FirstMigration")]
+    [Migration("20211027084933_FirstMigration")]
     partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,7 +18,7 @@ namespace Week7.Master.RepositoryEF.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.9")
+                .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Week7.Master.Core.Entities.Corso", b =>
