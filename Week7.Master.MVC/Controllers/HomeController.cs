@@ -28,6 +28,7 @@ namespace Week7.Master.MVC.Controllers
             return View();
         }
 
+        [Route("Home/Esempi")]
         public IActionResult Prova()
         {
             //ViewBag
@@ -48,5 +49,7 @@ namespace Week7.Master.MVC.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
     }
 }

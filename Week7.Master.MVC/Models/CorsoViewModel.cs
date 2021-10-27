@@ -9,7 +9,7 @@ namespace Week7.Master.MVC.Models
 {
     public class CorsoViewModel
     {
-        [Required]
+        [Required (ErrorMessage ="Campo obbligatorio")]
         [DisplayName("Codice Corso")]
         public string CorsoCodice { get; set; }
 
