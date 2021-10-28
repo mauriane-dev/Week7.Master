@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using Week7.Master.MVC.Models;
 
 namespace Week7.Master.MVC.Controllers
 {
+    [Authorize(Policy = "Adm")]
     public class StudentiController : Controller
     {
         private readonly IBusinessLayer BL; //per collegarsi alle logiche di business

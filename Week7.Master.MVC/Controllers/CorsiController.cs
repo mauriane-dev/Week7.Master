@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,12 +53,14 @@ namespace Week7.Master.MVC.Controllers
 
         }
 
+        [Authorize (Policy="Adm")] //non solo chiede il login/autenticazione ma richiede che il ruolo sia Administrator        
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
+        [Authorize(Policy = "Adm")]
         [HttpPost]
         public IActionResult Create(CorsoViewModel corsoViewModel)
         {
@@ -70,6 +73,7 @@ namespace Week7.Master.MVC.Controllers
             return View(corsoViewModel);
         }
 
+        [Authorize(Policy = "Adm")]
         [HttpGet]
         public IActionResult Edit(string id)
         {
@@ -78,6 +82,7 @@ namespace Week7.Master.MVC.Controllers
             return View(corsoViewModel);
         }
 
+        [Authorize(Policy = "Adm")]
         [HttpPost]
         public IActionResult Edit(CorsoViewModel corsoViewModel)
         {
@@ -90,6 +95,7 @@ namespace Week7.Master.MVC.Controllers
             return View(corsoViewModel);
         }
 
+        [Authorize(Policy = "Adm")]
         [HttpGet]
         public IActionResult Delete(string id)
         {
@@ -98,6 +104,7 @@ namespace Week7.Master.MVC.Controllers
             return View(corsoViewModel);
         }
 
+        [Authorize(Policy = "Adm")]
         [HttpPost]
         public IActionResult Delete(CorsoViewModel corsoViewModel)
         {

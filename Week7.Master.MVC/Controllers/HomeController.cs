@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using Week7.Master.MVC.Models;
 
 namespace Week7.Master.MVC.Controllers
 {
+    [Authorize] // richiede login/autenticazione per effettuare tutte le azioni del controller ad eccezione delle [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -23,11 +25,13 @@ namespace Week7.Master.MVC.Controllers
             return View();
         }
 
+        [AllowAnonymous] //disponibile anche senza login/autenticazione
         public IActionResult Privacy()
         {
             return View();
         }
 
+        [Authorize]// richiede login/autenticazione per effettuare la singola azione
         [Route("Home/Esempi")]
         public IActionResult Prova()
         {
