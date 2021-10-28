@@ -20,7 +20,8 @@
                 <th>
                     <a asp-controller="Studenti" asp-action="Edit" asp-route-id="@item.ID" class="btn btn-primary">Modifica</a>
                     <a asp-controller="Studenti" asp-action="Details" asp-route-id="@item.ID" class="btn btn-primary">Visualizza Dettagli</a>
-                    <a asp-controller="Studenti" asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">Elimina</a>
+                    @*<a asp-controller="Studenti" asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">Elimina</a>*@
+                    <a href="#" onclick="deleteStudente(@item.ID); return false;">Elimina</a>
                 </th>
             </tr>
         }
@@ -33,3 +34,26 @@
         </tr>
     </tfoot>
 </table>
+
+@section Scripts{ 
+    <script>
+    //javascript
+    function deleteStudente(studenteId) {
+        var confirmation = confirm("Sei sicuro di voler eliminare lo studente" + studenteId + "?");
+
+        if (!confirmation)
+            return;
+
+        $.ajax({
+            type: 'GET',
+            url: `@Url.Action("DeleteJS", "Studenti")/${studenteId}`,
+            contentType: 'application/json; charset=utf-8',
+            success: (data) => {
+                if (data) {
+                    location.href="@Url.Action("Index","Studenti")"
+                }
+            }
+        })
+    }
+    </script>
+}

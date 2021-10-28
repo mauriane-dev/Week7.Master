@@ -46,6 +46,7 @@ namespace Week7.Master.MVC
             services.AddScoped<IRepositoryStudenti, RepositoryStudentiEF>();
             services.AddScoped<IRepositoryLezioni, RepositoryLezioniEF>();
             services.AddScoped<IRepositoryDocenti, RepositoryDocentiEF>();
+            services.AddScoped<IRepositoryUtenti, RepositoryUtentiEF>();
 
             services.AddDbContext<MasterContext>(options =>
            {

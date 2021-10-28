@@ -15,13 +15,15 @@ namespace Week7.Master.Core.BusinessLayer
         private readonly IRepositoryDocenti docentiRepo;
         private readonly IRepositoryStudenti studentiRepo;
         private readonly IRepositoryLezioni lezioniRepo;
+        private readonly IRepositoryUtenti utentiRepo;
 
-        public MainBusinessLayer(IRepositoryCorsi corsi, IRepositoryDocenti docenti, IRepositoryLezioni lezioni, IRepositoryStudenti studenti)
+        public MainBusinessLayer(IRepositoryCorsi corsi, IRepositoryDocenti docenti, IRepositoryLezioni lezioni, IRepositoryStudenti studenti, IRepositoryUtenti utenti)
         {
             corsiRepo = corsi;
             docentiRepo = docenti;
             lezioniRepo = lezioni;
             studentiRepo = studenti;
+            utentiRepo = utenti;
         }
 
         
@@ -278,6 +280,16 @@ namespace Week7.Master.Core.BusinessLayer
             lezioni = lezioniRepo.GetAll().Where(l => l.CorsoCodice == corso.CorsoCodice).ToList();
             return lezioni;
         }
+
         #endregion
+
+        public Utente GetAccount(string username)
+        {
+            if (string.IsNullOrEmpty(username))
+            {
+                return null;
+            }
+            return utentiRepo.GetByUsername(username);
+        }
     }
 }

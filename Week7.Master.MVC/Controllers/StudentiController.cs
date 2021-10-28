@@ -94,6 +94,19 @@ namespace Week7.Master.MVC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+
+        [HttpGet]
+        public IActionResult DeleteJS(int id)
+        {
+            var messaggio = BL.EliminaStudente(id);
+            if(messaggio== "Studente eliminato correttamente")
+            {
+                return Json(true);
+            }
+            
+            return Json(false);
+        }
         private void LoadViewBag()
         {
             ViewBag.TitoloStudio = new SelectList(new[]{

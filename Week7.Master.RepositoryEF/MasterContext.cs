@@ -15,6 +15,7 @@ namespace Week7.Master.RepositoryEF
         public DbSet<Studente> Studenti { get; set; }
         public DbSet<Lezione> Lezioni { get; set; }
         public DbSet<Docente> Docenti { get; set; }
+        public DbSet<Utente> Utenti { get; set; }
 
 
 
@@ -39,6 +40,7 @@ namespace Week7.Master.RepositoryEF
             modelBuilder.ApplyConfiguration<Studente>(new StudenteConfiguration());
             modelBuilder.ApplyConfiguration<Docente>(new DocenteConfiguration());
             modelBuilder.ApplyConfiguration<Lezione>(new LezioneConfiguration());
+            modelBuilder.ApplyConfiguration<Utente>(new UtenteConfiguration());
         }
     }
 }

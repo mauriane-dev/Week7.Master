@@ -70,5 +70,7 @@ namespace Week7.Master.Core.BusinessLayer
         public IList<Lezione> GetLezioniByNomeCorso(string nomeCorso);
         #endregion
 
+        public Utente GetAccount(string username);
+
     }
 }
