@@ -78,6 +78,12 @@ namespace Week7.Master.MVC.Controllers
             return View();
         }
 
+        public async Task<IActionResult> LogoutAsync()
+        {
+            await HttpContext.SignOutAsync();
+            return Redirect("/");
+        }
+
         public IActionResult Forbidden() => View();
         //{
         //    return View();
